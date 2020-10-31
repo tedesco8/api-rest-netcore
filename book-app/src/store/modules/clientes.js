@@ -1,6 +1,4 @@
-import decode from "jwt-decode";
 import axios from "axios";
-import router from "../../router";
 import swal from 'sweetalert';
 
 export default {
@@ -24,14 +22,14 @@ export default {
     getClientes: async function({ commit }, token) {
       let header = { Token: token };
       let configuracion = { headers: header };
-      let data = null;
+      let dataV = null;
 
       // debugger
       await axios
         .get("clientes", configuracion)
         .then(function(response) {
-          data = response.data;
-          commit("setClientes", data);
+          dataV = response.data;
+          commit("setClientes", dataV);
         })
         .catch(function(error) {
           console.log(error);
@@ -40,13 +38,13 @@ export default {
     getCliente: async function({ commit }, data) {
       let header = { Token: data.token };
       let configuracion = { headers: header };
-      let data = null;
+      let dataV = null;
 
       await axios
         .get(`clientes/${data.id}`, configuracion)
         .then(function(response) {
-          data = response.data.detalles;
-          commit("setCliente", data);
+          dataV = response.data.detalles;
+          commit("setCliente", dataV);
         })
         .catch(function(error) {
           console.log(error);
@@ -71,11 +69,11 @@ export default {
           },
           configuracion
         )
-        .then(function(res) {
+        .then(function() {
           dispatch("getClientes", data.token);
           swal({
             title: "Buen trabajo!",
-            text: `Cliente ${res.data.nombre} agregado correctamente`,
+            text: `Cliente agregado correctamente`,
             icon: "success",
           });
         })
@@ -105,11 +103,11 @@ export default {
           },
           configuracion
         )
-        .then(function(res) {
+        .then(function() {
           dispatch("getClientes", data.token);
           swal({
             title: "Buen trabajo!",
-            text: `Cliente ${res.data.nombre} editado correctamente`,
+            text: `Cliente editado correctamente`,
             icon: "success",
           });
         })

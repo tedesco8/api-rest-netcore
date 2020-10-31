@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import Indicadores from "../components/dashboard/Indicadores";
 
 export default {
@@ -23,31 +23,31 @@ export default {
     return {
       items: [
         {
-          color: "indigo darken-1",
+          color: "#1565C0",
           cuantity: "0",
           title: "Compras",
           artist: "Compras",
         },
         {
-          color: "indigo darken-1",
+          color: "#1565C0",
           cuantity: "0",
           title: "Libros",
           artist: "Libros",
         },
         {
-          color: "indigo darken-1",
+          color: "#1565C0",
           cuantity: "0",
           title: "Clientes",
           artist: "Total de clientes",
         },
         {
-          color: "indigo darken-1",
+          color: "#1565C0",
           cuantity: "0",
           title: "Editoriales",
           artist: "Editoriales",
         },
         {
-          color: "indigo darken-1",
+          color: "#1565C0",
           cuantity: "0",
           title: "Empleados",
           artist: "Empleados",
@@ -56,7 +56,7 @@ export default {
     };
   },
   created() {
-    this.getAll();
+    // this.getAll();
   },
   mounted() {
     this.totalCompras(),
@@ -69,7 +69,7 @@ export default {
     Indicadores,
   },
   computed: {
-    ...mapState("usuarioNamespace", ["token", "usuario"]),
+    ...mapState("usuariosNamespace", ["token", "usuario"]),
     ...mapState("clientesNamespace", ["clientes"]),
     ...mapState("empleadosNamespace", ["empleados"]),
     ...mapState("editorialesNamespace", ["editoriales"]),
@@ -83,11 +83,11 @@ export default {
     ...mapActions("editorialesNamespace", ["getEditoriales"]),
     ...mapActions("comprasNamespace", ["getCompras"]),
     async getAll() {
-      await this.getLibros(token);
-      await this.getClientes(token);
-      await this.getEmpleados(token);
-      await this.getEditoriales(token);
-      await this.getCompras(token);
+      await this.getLibros(this.token);
+      await this.getClientes(this.token);
+      await this.getEmpleados(this.token);
+      await this.getEditoriales(this.token);
+      await this.getCompras(this.token);
     },
     totalCompras() {
       this.items[0].cuantity = this.compras.length;

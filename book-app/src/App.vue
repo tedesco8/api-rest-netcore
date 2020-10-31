@@ -26,13 +26,13 @@ export default {
     Footer,
   },
   created() {
-    this.autoLogin();
+    // this.autoLogin();
   },
   methods: {
-    ...mapActions("usuarioNamespace", ["autoLogin"]),
+    ...mapActions("usuariosNamespace", ["autoLogin"]),
   },
   computed: {
-    ...mapState("usuarioNamespace", ["token", "usuario"]),
+    ...mapState("usuariosNamespace", ["token", "usuario"]),
   },
 };
 </script>

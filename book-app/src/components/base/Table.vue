@@ -57,12 +57,13 @@
   </v-container>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
-
 export default {
   name: "Table",
   data() {
-    return {};
+    return {
+      search: "",
+      select: "",
+    };
   },
   props: {
     title: String,
@@ -88,8 +89,6 @@ export default {
     },
     headers: Array,
     arrayList: Array,
-    search: "",
-    select: "",
     opciones: {
       type: Boolean,
       default: false,

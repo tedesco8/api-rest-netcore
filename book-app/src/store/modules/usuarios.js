@@ -1,70 +1,105 @@
+import decode from "jwt-decode";
 import axios from "axios";
+import router from "../../router";
 import swal from 'sweetalert';
 
 export default {
   namespaced: true,
   state: {
-    editorial: {},
-    editoriales: [],
+    token: null,
+    usuario: null,
+    usuarioQuery: {},
+    usuarios: [],
   },
   mutations: {
-    setEditorial(state, editorial) {
-      state.editorial = editorial;
+    setToken(state, token) {
+      state.token = token;
     },
-    setEditoriales(state, editoriales) {
-      state.editoriales = editoriales;
+    setUsuario(state, usuario) {
+      state.usuario = usuario;
+    },
+    llenarUsuarios(state, data) {
+      state.usuarios = data;
+    },
+    llenarUsuario(state, data) {
+      state.usuarioQuery = data;
     },
   },
   actions: {
-    getEditoriales: async function({ commit }, token) {
+    guardarToken({ commit }, token) {
+      commit("setToken", token);
+      commit("setUsuario", decode(token));
+      localStorage.setItem("token", token);
+    },
+    autoLogin({ commit }) {
+      let token = localStorage.getItem("token");
+
+      let decodificado = decode(token);
+      
+      var current_time = Date.now() / 1000;
+      if (decodificado.exp < current_time) {
+        router.push({ name: "login" });
+      } else {
+        commit("setToken", token);
+        commit("setUsuario", decodificado);
+        router.push({ name: "home" });
+      }
+    },
+    salir({ commit }) {
+      commit("setToken", null);
+      commit("setUsuario", null);
+      localStorage.removeItem("token");
+      router.push({ name: "login" });
+    },
+    getUsuarios: async function({ commit }, token) {
       let header = { Token: token };
       let configuracion = { headers: header };
       let dataV = null;
 
       // debugger
       await axios
-        .get("editoriales", configuracion)
+        .get("usuarios", configuracion)
         .then(function(response) {
           dataV = response.data;
-          commit("setEditoriales", dataV);
+          commit("llenarUsuarios", dataV);
         })
         .catch(function(error) {
           console.log(error);
         });
     },
-    getEditorial: async function({ commit }, data) {
+    getUsuario: async function({ commit }, data) {
       let header = { Token: data.token };
       let configuracion = { headers: header };
       let dataV = null;
 
       await axios
-        .get(`editoriales/${data.id}`, configuracion)
+        .get(`usuarios/${data.id}`, configuracion)
         .then(function(response) {
-          dataV = response.data;
-          commit("setEditorial", dataV);
+          dataV = response.data.detalles;
+          commit("llenarUsuario", dataV);
         })
         .catch(function(error) {
           console.log(error);
         });
     },
-    saveEditorial: async function({ dispatch }, data) {
+    saveUsuario: async function({ dispatch }, data) {
       let header = { Token: data.token };
       let configuracion = { headers: header };
-      // debugger
+      //// debugger
 
       await axios
         .post(
-          "editoriales",
+          "usuarios",
           {
-            Nombre: data.Nombre,
+            
           },
           configuracion
         )
-        .then(function() {
-          dispatch("getEditoriales", data.token);
+        .then(function(res) {
+          dispatch("getUsuarios", data.token);
           swal({
             title: "Buen trabajo!",
-            text: `Editorial agregado correctamente`,
+            text: `Usuario ${res.data.nombre} agregado correctamente`,
             icon: "success",
           });
         })
@@ -76,23 +111,23 @@ export default {
           });
         });
     },
-    updateEditorial: async function({ dispatch }, data) {
+    updateUsuario: async function({ dispatch }, data) {
       let header = { Token: data.token };
       let configuracion = { headers: header };
       //debugger;
       await axios
         .put(
-          `editoriales/${data.id}`,
+          "usuarios",
           {
-            Nombre: data.Nombre,
+            
           },
           configuracion
         )
-        .then(function() {
-          dispatch("getEditoriales", data.token);
+        .then(function(res) {
+          dispatch("getUsuarios", data.token);
           swal({
             title: "Buen trabajo!",
-            text: `Editorial editada correctamente`,
+            text: `Usuario ${res.data.nombre} editado correctamente`,
             icon: "success",
           });
         })
@@ -104,19 +139,19 @@ export default {
           });
         });
     },
-    deleteEditorial: async function({ dispatch }, data) {
+    deleteUsuario: async function({ dispatch }, data) {
       let token = data.token;
       let header = { Token: token };
       let configuracion = { headers: header };
 
       await axios
-        .delete(`editoriales/${data.id}`, configuracion)
+        .delete(`usuarios/${data.id}`, configuracion)
         .then(function() {
           // debugger
-          dispatch("getEditoriales", data.token);
+          dispatch("getUsuarios", data.token);
           swal({
             title: "Buen trabajo!",
-            text: `Editorial eliminada correctamente`,
+            text: `Usuario eliminado correctamente`,
             icon: "success",
           });
         })

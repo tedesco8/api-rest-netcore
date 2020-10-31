@@ -1,6 +1,4 @@
-import decode from "jwt-decode";
 import axios from "axios";
-import router from "../../router";
 import swal from 'sweetalert';
 
 export default {
@@ -21,14 +19,14 @@ export default {
     getLibros: async function({ commit }, token) {
       let header = { Token: token };
       let configuracion = { headers: header };
-      let data = null;
+      let dataV = null;
 
       // debugger
       await axios
         .get("libros", configuracion)
         .then(function(response) {
-          data = response.data;
-          commit("setLibros", data);
+          dataV = response.data;
+          commit("setLibros", dataV);
         })
         .catch(function(error) {
           console.log(error);
@@ -37,13 +35,13 @@ export default {
     getLibro: async function({ commit }, data) {
       let header = { Token: data.token };
       let configuracion = { headers: header };
-      let data = null;
+      let dataV = null;
 
       await axios
         .get(`libros/${data.id}`, configuracion)
         .then(function(response) {
-          data = response.data.detalles;
-          commit("setLibro", data);
+          dataV = response.data.detalles;
+          commit("setLibro", dataV);
         })
         .catch(function(error) {
           console.log(error);
@@ -66,7 +64,7 @@ export default {
           },
           configuracion
         )
-        .then(function(res) {
+        .then(function() {
           dispatch("getLibros", data.token);
           swal({
             title: "Buen trabajo!",
@@ -98,7 +96,7 @@ export default {
           },
           configuracion
         )
-        .then(function(res) {
+        .then(function() {
           dispatch("getLibros", data.token);
           swal({
             title: "Buen trabajo!",

@@ -1,6 +1,4 @@
-import decode from "jwt-decode";
 import axios from "axios";
-import router from "../../router";
 import swal from 'sweetalert';
 
 export default {
@@ -21,29 +19,29 @@ export default {
     getCompras: async function({ commit }, token) {
       let header = { Token: token };
       let configuracion = { headers: header };
-      let data = null;
+      let dataV = null;
 
       // debugger
       await axios
         .get("compras", configuracion)
         .then(function(response) {
-          data = response.data;
-          commit("setCompras", data);
+          dataV = response.data;
+          commit("setCompras", dataV);
         })
         .catch(function(error) {
           console.log(error);
         });
     },
-    getCompras: async function({ commit }, data) {
+    getCompra: async function({ commit }, data) {
       let header = { Token: data.token };
       let configuracion = { headers: header };
-      let data = null;
+      let dataV = null;
 
       await axios
         .get(`compras/${data.id}`, configuracion)
         .then(function(response) {
-          data = response.data;
-          commit("setCompra", data);
+          dataV = response.data;
+          commit("setCompra", dataV);
         })
         .catch(function(error) {
           console.log(error);
@@ -66,7 +64,7 @@ export default {
           },
           configuracion
         )
-        .then(function(res) {
+        .then(function() {
           dispatch("getCompras", data.token);
           swal({
             title: "Buen trabajo!",
@@ -98,7 +96,7 @@ export default {
           },
           configuracion
         )
-        .then(function(res) {
+        .then(function() {
           dispatch("getCompras", data.token);
           swal({
             title: "Buen trabajo!",

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app clipped-left color="primary">
+    <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="primary">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Makers</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -27,9 +27,9 @@
                 >
               </v-list-item-content>
             </v-list-item>
-            <v-list-item :to="{ name: '' }">
+            <v-list-item :to="{ name: 'libros' }">
               <v-list-item-action>
-                <v-icon dark>storage</v-icon>
+                <v-icon dark></v-icon>
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title class="white--text pt-2"
@@ -37,9 +37,9 @@
                 >
               </v-list-item-content>
             </v-list-item>
-            <v-list-item :to="{ name: '' }">
+            <v-list-item :to="{ name: 'editoriales' }">
               <v-list-item-action>
-                <v-icon dark>business</v-icon>
+                <v-icon dark></v-icon>
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title class="white--text pt-2"
@@ -59,9 +59,9 @@
                 >
               </v-list-item-content>
             </v-list-item>
-            <v-list-item :to="{ name: 'coches' }">
+            <v-list-item :to="{ name: 'compras' }">
               <v-list-item-action>
-                <v-icon dark>directions_car</v-icon>
+                <v-icon dark></v-icon>
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title class="white--text pt-2"
@@ -81,9 +81,9 @@
                 >
               </v-list-item-content>
             </v-list-item>
-            <v-list-item :to="{ name: '' }">
+            <v-list-item :to="{ name: 'clientes' }">
               <v-list-item-action>
-                <v-icon dark>verified_user</v-icon>
+                <v-icon dark></v-icon>
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title class="white--text pt-2"
@@ -91,9 +91,9 @@
                 >
               </v-list-item-content>
             </v-list-item>
-            <v-list-item :to="{ name: '' }">
+            <v-list-item :to="{ name: 'empleados' }">
               <v-list-item-action>
-                <v-icon dark>check_circle</v-icon>
+                <v-icon dark></v-icon>
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title class="white--text pt-2"
@@ -115,10 +115,10 @@ export default {
     source: String,
   },
   data: () => ({
-    drawer: null,
+    drawer: false,
   }),
   computed: {
-    ...mapState("usuarioNamespace", ["usuario"]),
+    ...mapState("usuariosNamespace", ["usuario"]),
     logueado() {
       return this.usuario;
     },
@@ -127,7 +127,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("usuarioNamespace", ["salir"]),
+    ...mapActions("usuariosNamespace", ["salir"]),
   },
   // created() {
   //   this.$vuetify.theme.dark = true;
