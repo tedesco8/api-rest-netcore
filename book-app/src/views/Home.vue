@@ -55,17 +55,44 @@ export default {
       ],
     };
   },
+  created() {
+    this.getAll();
+  },
+  mounted() {
+    this.totalCompras(),
+    this.totalLibros(),
+    this.totalClientes(),
+    this.totalCoches(),
+    this.totalEmpleados()
+  },
   components: {
     Indicadores,
   },
   computed: {
-    ...mapState("usuarioNamespace", ["token", "usuarios"]),
+    ...mapState("usuarioNamespace", ["token", "usuario"]),
+    ...mapState("clientesNamespace", ["clientes"]),
+    ...mapState("empleadosNamespace", ["empleados"]),
+    ...mapState("editorialesNamespace", ["editoriales"]),
+    ...mapState("comprasNamespace", ["compras"]),
+    ...mapState("librosNamespace", ["libros"]),
   },
   methods: {
-    totalReservas() {
+    ...mapActions("librosNamespace", ["getLibros"]),
+    ...mapActions("clientesNamespace", ["getClientes"]),
+    ...mapActions("empleadosNamespace", ["getEmpleados"]),
+    ...mapActions("editorialesNamespace", ["getEditoriales"]),
+    ...mapActions("comprasNamespace", ["getCompras"]),
+    async getAll() {
+      await this.getLibros(token);
+      await this.getClientes(token);
+      await this.getEmpleados(token);
+      await this.getEditoriales(token);
+      await this.getCompras(token);
+    },
+    totalCompras() {
       this.items[0].cuantity = this.compras.length;
     },
-    totalContratos() {
+    totalLibros() {
       this.items[1].cuantity = this.libros.length;
     },
     totalClientes() {
@@ -74,7 +101,7 @@ export default {
     totalCoches() {
       this.items[3].cuantity = this.editoriales.length;
     },
-    cochesDisponibles() {
+    totalEmpleados() {
       this.items[4].cuantity = this.empleados.length;
     }
   },
