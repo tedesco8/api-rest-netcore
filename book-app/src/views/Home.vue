@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-m>
     <v-row>
-      <Indicadores1 :items="items" />
+      <Indicadores :items="items" />
     </v-row>
     <v-row>
       <v-col cols="12" xs="12" sm="12" md="7">
@@ -16,7 +16,7 @@
 
 <script>
 import { mapState } from "vuex";
-import Indicadores1 from "../components/dashboard/Indicadores";
+import Indicadores from "../components/dashboard/Indicadores";
 
 export default {
   data() {
@@ -24,7 +24,7 @@ export default {
       items: [
         {
           color: "indigo darken-1",
-          cuantity: "",
+          cuantity: "0",
           title: "Compras",
           artist: "Compras",
         },
@@ -36,19 +36,19 @@ export default {
         },
         {
           color: "indigo darken-1",
-          cuantity: "",
+          cuantity: "0",
           title: "Clientes",
           artist: "Total de clientes",
         },
         {
           color: "indigo darken-1",
-          cuantity: "",
+          cuantity: "0",
           title: "Editoriales",
           artist: "Editoriales",
         },
         {
           color: "indigo darken-1",
-          cuantity: "",
+          cuantity: "0",
           title: "Empleados",
           artist: "Empleados",
         },
@@ -56,30 +56,27 @@ export default {
     };
   },
   components: {
-    Indicadores1,
+    Indicadores,
   },
   computed: {
     ...mapState("usuarioNamespace", ["token", "usuarios"]),
   },
   methods: {
     totalReservas() {
-      this.items[0].cuantity = this.reservas.length;
+      this.items[0].cuantity = this.compras.length;
     },
     totalContratos() {
-      this.items[1].cuantity = this.contratos.length;
+      this.items[1].cuantity = this.libros.length;
     },
     totalClientes() {
       this.items[2].cuantity = this.clientes.length;
     },
     totalCoches() {
-      this.items[3].cuantity = this.coches.length;
+      this.items[3].cuantity = this.editoriales.length;
     },
     cochesDisponibles() {
-      this.items[4].cuantity = this.cochesD.length;
-    },
-    totalTareas() {
-      this.items[5].cuantity = this.tareas.length;
-    },
+      this.items[4].cuantity = this.empleados.length;
+    }
   },
 };
 </script>
