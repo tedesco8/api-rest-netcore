@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace Editoriales.Models
+namespace book_api.Models
 {
     public partial class EditorialesCTX : DbContext
     {
@@ -15,5 +15,6 @@ namespace Editoriales.Models
         }
 
         public virtual DbSet<Editoriales> Editoriales { get; set; }
+    }
         
 }

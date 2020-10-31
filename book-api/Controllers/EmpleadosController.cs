@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Empleados.Models;
+using book_api.Models;
 
-namespace Empleados.Controllers
+namespace book_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -47,7 +45,7 @@ namespace Empleados.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(int id, Empleados empleados)
         {
-            if (id != empleados.Id)
+            if (id != empleados.IdEmpleado)
             {
                 return BadRequest();
             }
@@ -82,7 +80,7 @@ namespace Empleados.Controllers
             _context.Empleados.Add(empleados);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLibros", new { id = empleados.Id }, empleados);
+            return CreatedAtAction("GetLibros", new { id = empleados.IdEmpleado }, empleados);
         }
 
         // DELETE: api/Libros/5
@@ -103,7 +101,7 @@ namespace Empleados.Controllers
 
         private bool EmpleadosExists(int id)
         {
-            return _context.Empleados.Any(e => e.Id == id);
+            return _context.Empleados.Any(e => e.IdEmpleado == id);
         }
     }
 }

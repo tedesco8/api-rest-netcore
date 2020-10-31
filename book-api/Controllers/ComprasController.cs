@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using book_api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Compras.Models;
 
-namespace Compras.Controllers
+namespace book_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -47,7 +45,7 @@ namespace Compras.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(int id, Compras compras)
         {
-            if (id != compras.Id)
+            if (id != compras.IdCompraLibro)
             {
                 return BadRequest();
             }
@@ -82,7 +80,7 @@ namespace Compras.Controllers
             _context.Compras.Add(compras);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCompras", new { id = compras.Id }, compras);
+            return CreatedAtAction("GetCompras", new { id = compras.IdCompraLibro }, compras);
         }
 
         // DELETE: api/Compras/5
@@ -103,7 +101,7 @@ namespace Compras.Controllers
 
         private bool ComprasExists(int id)
         {
-            return _context.Compras.Any(e => e.Id == id);
+            return _context.Compras.Any(e => e.IdCompraLibro == id);
         }
     }
 }

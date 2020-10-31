@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Editoriales.Models {
+namespace book_api.Models {
     public partial class Editoriales {
         
         [Key]

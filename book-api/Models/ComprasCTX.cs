@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace Compras.Models
+namespace book_api.Models
 {
     public partial class ComprasCTX : DbContext
     {
@@ -15,5 +15,6 @@ namespace Compras.Models
         }
 
         public virtual DbSet<Compras> Compras { get; set; }
+    }
         
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace Empleados.Models
+namespace book_api.Models
 {
     public partial class EmpleadosCTX : DbContext
     {
@@ -15,5 +15,6 @@ namespace Empleados.Models
         }
 
         public virtual DbSet<Empleados> Empleados { get; set; }
+    }
         
 }

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Editorials.Models;
+using book_api.Models;
 
-namespace Editoriales.Controllers
+namespace book_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -47,7 +45,7 @@ namespace Editoriales.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEditoriales(int id, Editoriales editoriales)
         {
-            if (id != editoriales.Id)
+            if (id != editoriales.IdEditorial)
             {
                 return BadRequest();
             }
@@ -82,7 +80,7 @@ namespace Editoriales.Controllers
             _context.Editoriales.Add(editoriales);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLibros", new { id = editoriales.Id }, editoriales);
+            return CreatedAtAction("GetLibros", new { id = editoriales.IdEditorial }, editoriales);
         }
 
         // DELETE: api/Editoriales/5
@@ -103,7 +101,7 @@ namespace Editoriales.Controllers
 
         private bool EditorialesExists(int id)
         {
-            return _context.Editoriales.Any(e => e.Id == id);
+            return _context.Editoriales.Any(e => e.IdEditorial == id);
         }
     }
 }

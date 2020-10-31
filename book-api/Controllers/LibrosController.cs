@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using book_api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Libros.Models;
 
-namespace Libros.Controllers
+namespace book_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -47,7 +45,7 @@ namespace Libros.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(int id, Libros libros)
         {
-            if (id != libros.Id)
+            if (id != libros.IdLibro)
             {
                 return BadRequest();
             }
@@ -82,7 +80,7 @@ namespace Libros.Controllers
             _context.Libros.Add(libros);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLibros", new { id = libros.Id }, libros);
+            return CreatedAtAction("GetLibros", new { id = libros.IdLibro }, libros);
         }
 
         // DELETE: api/Libros/5
@@ -103,7 +101,7 @@ namespace Libros.Controllers
 
         private bool LibrosExists(int id)
         {
-            return _context.Libros.Any(e => e.Id == id);
+            return _context.Libros.Any(e => e.IdLibro == id);
         }
     }
 }

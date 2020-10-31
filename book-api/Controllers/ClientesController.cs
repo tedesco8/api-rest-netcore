@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Clientes.Models;
+using book_api.Models;
 
-namespace Clientes.Controllers
+namespace book_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -47,7 +47,7 @@ namespace Clientes.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(int id, Clientes clientes)
         {
-            if (id != clientes.Id)
+            if (id != clientes.IdCliente)
             {
                 return BadRequest();
             }
@@ -82,7 +82,7 @@ namespace Clientes.Controllers
             _context.Clientes.Add(clientes);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetClientes", new { id = clientes.Id }, clientes);
+            return CreatedAtAction("GetClientes", new { id = clientes.IdCliente }, clientes);
         }
 
         // DELETE: api/Clientes/5
@@ -103,7 +103,7 @@ namespace Clientes.Controllers
 
         private bool ClientesExists(int id)
         {
-            return _context.Clientes.Any(e => e.Id == id);
+            return _context.Clientes.Any(e => e.IdCliente == id);
         }
     }
 }

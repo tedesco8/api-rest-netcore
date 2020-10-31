@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Libros.Models {
+namespace book_api.Models {
     public class Libros {
         
         [Key]
@@ -11,7 +11,7 @@ namespace Libros.Models {
         public string Titulo {get; set;}
 
         [ForeignKey("IdEditorial")]
-        public virtual Editorials Editorials { get; set; }
+        public virtual Editoriales Editoriales { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? Fecha {get; set;}
